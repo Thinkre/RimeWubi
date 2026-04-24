@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self'">
+  <title>RimeWubi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Squirrel 未安装时的引导浮层 -->
+<div id="squirrel-gate">
+  <div style="font-size:48px">⌨️</div>
+  <h2>需要先安装 Squirrel 鼠须管</h2>
+  <p>RimeWubi 依赖 Squirrel 输入法运行。请先下载安装，完成后重新打开此应用。</p>
+  <button class="btn btn-primary" onclick="window.rime.openSquirrelDownload()">
+    前往下载 Squirrel
+  </button>
+</div>
+
+<div id="app">
+  <!-- 侧边栏 -->
+  <aside id="sidebar">
+    <div class="sidebar-label">RimeWubi</div>
+    <nav>
+      <ul>
+        <li><a href="#" class="nav-link active" data-module="deploy">
+          <span class="nav-icon">⚡</span>部署生效
+        </a></li>
+        <li><a href="#" class="nav-link" data-module="appearance">
+          <span class="nav-icon">🎨</span>外观设置
+        </a></li>
+        <li><a href="#" class="nav-link" data-module="keybindings">
+          <span class="nav-icon">⌨️</span>按键设置
+        </a></li>
+        <li><a href="#" class="nav-link" data-module="lua-features">
+          <span class="nav-icon">🔧</span>Lua 功能
+        </a></li>
+        <li><a href="#" class="nav-link" data-module="app-options">
+          <span class="nav-icon">📱</span>应用选项
+        </a></li>
+        <li><a href="#" class="nav-link" data-module="vocabulary">
+          <span class="nav-icon">📚</span>词库管理
+        </a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- 内容区 -->
+  <main id="content">
+
+    <section id="module-deploy" class="module active">
+      <div class="module-header">
+        <div class="module-title">部署生效</div>
+        <div class="module-desc">修改配置后点击「重新部署」让输入法立即生效</div>
+      </div>
+      <div class="module-body" id="deploy-body">
+        <!-- P2-2a 实现 -->
+      </div>
+    </section>
+
+    <section id="module-appearance" class="module">
+      <div class="module-header">
+        <div class="module-title">外观设置</div>
+        <div class="module-desc">调整候选框颜色、字体与圆角</div>
+      </div>
+      <div class="module-body">
+        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2b</p>
+      </div>
+    </section>
+
+    <section id="module-keybindings" class="module">
+      <div class="module-header">
+        <div class="module-title">按键设置</div>
+        <div class="module-desc">配置分号/引号选词、翻页键、Emacs 模式等</div>
+      </div>
+      <div class="module-body">
+        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2c</p>
+      </div>
+    </section>
+
+    <section id="module-lua-features" class="module">
+      <div class="module-header">
+        <div class="module-title">Lua 功能</div>
+        <div class="module-desc">开启/关闭拼音注释、造词等 Lua 增强功能</div>
+      </div>
+      <div class="module-body">
+        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2d</p>
+      </div>
+    </section>
+
+    <section id="module-app-options" class="module">
+      <div class="module-header">
+        <div class="module-title">应用选项</div>
+        <div class="module-desc">管理自动切换英文的应用列表</div>
+      </div>
+      <div class="module-body">
+        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2e</p>
+      </div>
+    </section>
+
+    <section id="module-vocabulary" class="module">
+      <div class="module-header">
+        <div class="module-title">词库管理</div>
+        <div class="module-desc">查看/添加用户词条，管理 extra 词库</div>
+      </div>
+      <div class="module-body">
+        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2f</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="renderer.js"></script>
+</body>
+</html>
