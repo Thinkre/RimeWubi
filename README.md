@@ -59,7 +59,7 @@
 **前置要求：** macOS + [Squirrel 鼠须管](https://rime.im)
 
 ```bash
-git clone https://github.com/你的用户名/RimeWubi.git
+git clone https://github.com/Thinkre/RimeWubi.git
 cd RimeWubi
 bash install.sh
 ```
