@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 const { execFile } = require('child_process')
+const yaml = require('js-yaml')
 
 const RIME_DIR = path.join(os.homedir(), 'Library', 'Rime')
 const SQUIRREL = '/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel'
@@ -91,3 +92,58 @@ ipcMain.handle('rime:write-file', (_, filename, content) => {
 ipcMain.handle('rime:open-squirrel-download', () => {
   shell.openExternal('https://rime.im')
 })
+
+// ── Squirrel 外观 IPC ────────────────────────────────────────
+
+// 读取 squirrel.custom.yaml 中的 patch 对象
+ipcMain.handle('squirrel:read-style', () => {
+  const p = path.join(RIME_DIR, 'squirrel.custom.yaml')
+  if (!fs.existsSync(p)) return {}
+  const doc = yaml.load(fs.readFileSync(p, 'utf-8'))
+  return doc?.patch || {}
+})
+
+// 逐行替换指定 scheme 下的指定字段，保留注释
+ipcMain.handle('squirrel:update-scheme', (_, schemeName, fields) => {
+  const p = path.join(RIME_DIR, 'squirrel.custom.yaml')
+  let content = fs.readFileSync(p, 'utf-8')
+
+  for (const [field, value] of Object.entries(fields)) {
+    content = setSchemeField(content, schemeName, field, value)
+  }
+
+  fs.writeFileSync(p, content, 'utf-8')
+  return true
+})
+
+// 在 scheme 块内找到字段并替换值，注释保留
+function setSchemeField(content, scheme, field, value) {
+  const lines = content.split('\n')
+  let inScheme = false
+  let schemeIndentLen = -1
+
+  return lines.map(line => {
+    const indent = line.length - line.trimStart().length
+    const trimmed = line.trimStart()
+
+    if (!inScheme) {
+      if (trimmed.startsWith(`${scheme}:`)) {
+        inScheme = true
+        schemeIndentLen = indent
+      }
+      return line
+    }
+
+    // 离开 scheme 块（非空行且缩进 ≤ scheme 头部）
+    if (line.trim() && indent <= schemeIndentLen) {
+      inScheme = false
+      return line
+    }
+
+    // 匹配字段行（带或不带行尾注释）
+    const m = line.match(new RegExp(`^(\\s+${field}:\\s*)(0x[0-9a-fA-F]+|\\d+)(\\s*#.*)?$`))
+    if (m) return `${m[1]}${value}${m[3] || ''}`
+
+    return line
+  }).join('\n')
+}

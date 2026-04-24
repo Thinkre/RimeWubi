@@ -77,10 +77,49 @@
     <section id="module-appearance" class="module">
       <div class="module-header">
         <div class="module-title">外观设置</div>
-        <div class="module-desc">调整候选框颜色、字体与圆角</div>
+        <div class="module-desc">调整候选框颜色、字体大小与圆角，修改后需点击「部署生效」</div>
       </div>
       <div class="module-body">
-        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2b</p>
+
+        <!-- 方案 Tab -->
+        <div class="ap-tabs">
+          <button class="ap-tab active" data-scheme="roseo_maple">☀️ 亮色方案</button>
+          <button class="ap-tab" data-scheme="roseo_maple_dark">🌙 暗色方案</button>
+        </div>
+
+        <!-- 预览 -->
+        <div class="ap-preview" id="ap-preview">
+          <div class="ap-preview-label">预览</div>
+          <div class="ap-candidate-box" id="ap-box">
+            <div class="ap-preedit">wubi86</div>
+            <div class="ap-candidates">
+              <span class="ap-cand ap-cand-hi">
+                <span class="ap-label" id="prev-label">1</span>
+                <span class="ap-word" id="prev-hi-word">五笔</span>
+                <span class="ap-comment" id="prev-hi-comment">gxxn</span>
+              </span>
+              <span class="ap-cand">
+                <span class="ap-label">2</span>
+                <span class="ap-word">五</span>
+                <span class="ap-comment">gg</span>
+              </span>
+              <span class="ap-cand">
+                <span class="ap-label">3</span>
+                <span class="ap-word">笔</span>
+                <span class="ap-comment">ttfn</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 颜色 & 数值控件 -->
+        <div id="ap-fields"></div>
+
+        <div style="margin-top:20px">
+          <button class="btn btn-primary" id="ap-save-btn">保存外观</button>
+          <span id="ap-save-status" style="margin-left:12px;font-size:12px;color:var(--color-text-secondary)"></span>
+        </div>
+
       </div>
     </section>
 
@@ -128,5 +167,6 @@
 </div>
 
 <script src="renderer.js"></script>
+<script src="appearance.js"></script>
 </body>
 </html>

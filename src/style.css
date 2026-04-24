@@ -227,6 +227,94 @@ nav ul li a.active {
   color: var(--color-text-secondary);
 }
 
+/* ── Appearance module ─────────────────── */
+.ap-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.ap-tab {
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+}
+
+.ap-tab.active {
+  background: var(--color-nav-active-bg);
+  color: var(--color-nav-active-text);
+  border-color: transparent;
+  font-weight: 500;
+}
+
+.ap-preview {
+  margin-bottom: 24px;
+}
+
+.ap-preview-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ap-candidate-box {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  gap: 4px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.12);
+  min-width: 180px;
+  transition: background 200ms, border-color 200ms, border-radius 200ms;
+}
+
+.ap-preedit {
+  font-size: 12px;
+  color: #8E8E93;
+  padding-bottom: 2px;
+}
+
+.ap-candidates {
+  display: flex;
+  gap: 12px;
+}
+
+.ap-cand {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.ap-cand-hi {
+  background: var(--hi-bg, #EDEDF9);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.ap-label  { color: var(--label-txt, #aaa); font-size: 0.85em; }
+.ap-word   { color: var(--cand-txt, #222); }
+.ap-comment{ color: var(--cmt-txt, #5AC461); font-size: 0.82em; }
+.ap-cand-hi .ap-word   { color: var(--hi-txt, #4F11FA); }
+.ap-cand-hi .ap-label  { color: var(--hi-txt, #4F11FA); opacity: .6; }
+.ap-cand-hi .ap-comment{ color: var(--hi-txt, #4F11FA); opacity: .7; }
+
+.ap-color-input {
+  width: 36px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 2px;
+  background: none;
+}
+
 /* ── Status tag ────────────────────────── */
 .status {
   font-size: 12px;
