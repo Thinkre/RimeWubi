@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: 验证配置完整性
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 检查必需文件是否存在
+        run: |
+          missing=()
+
+          yaml_files=(
+            config/squirrel.custom.yaml
+            config/default.custom.yaml
+            config/wubi86_jidian.schema.yaml
+            config/wubi86_jidian.dict.yaml
+            config/wubi86_jidian_extra.dict.yaml
+            config/wubi86_jidian_pinyin.schema.yaml
+            config/wubi86_jidian_trad.schema.yaml
+            config/wubi86_jidian_trad_pinyin.schema.yaml
+            config/numbers.schema.yaml
+            config/pinyin_simp.schema.yaml
+            config/pinyin_simp.dict.yaml
+          )
+
+          lua_files=(
+            config/lua/wubi_save_word.lua
+            config/lua/wubi86_jidian_pinyin_code_hint.lua
+            config/lua/wubi86_jidian_date_translator.lua
+            config/lua/wubi86_jidian_single_char_first_filter.lua
+            config/lua/wubi86_jidian_single_char_only.lua
+          )
+
+          for f in "${yaml_files[@]}" "${lua_files[@]}"; do
+            if [ ! -f "$f" ]; then
+              missing+=("$f")
+            fi
+          done
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "缺少以下文件："
+            printf '  %s\n' "${missing[@]}"
+            exit 1
+          fi
+          echo "所有必需文件均存在。"
+
+      - name: 验证 YAML 语法
+        run: |
+          python3 - <<'EOF'
+          import sys
+          import yaml
+          import glob
+
+          errors = []
+          for path in glob.glob("config/**/*.yaml", recursive=True):
+              try:
+                  with open(path, encoding="utf-8") as f:
+                      yaml.safe_load(f)
+                  print(f"  OK  {path}")
+              except yaml.YAMLError as e:
+                  errors.append((path, str(e)))
+                  print(f"  NG  {path}: {e}")
+
+          if errors:
+              print(f"\n{len(errors)} 个文件 YAML 语法错误，CI 失败。")
+              sys.exit(1)
+          print(f"\n全部 {len(glob.glob('config/**/*.yaml', recursive=True))} 个 YAML 文件语法正确。")
+          EOF
