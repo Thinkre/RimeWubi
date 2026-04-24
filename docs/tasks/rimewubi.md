@@ -10,11 +10,11 @@
 
 | ID | 任务 | 状态 | 备注 |
 |----|------|------|------|
-| P1-1 | 建仓 + init `config/` 结构 + `install.sh` | ⬜ 待做 | |
-| P1-2 | 整理核心配置文件进 `config/` | ⬜ 待做 | 共10个 yaml |
-| P1-3 | 整理 Lua 脚本进 `config/lua/` | ⬜ 待做 | 共5个 lua |
-| P1-4 | GitHub Actions CI + README 初稿 | ⬜ 待做 | |
-| P1-5 | Phase 1 验收 | ⬜ 待做 | 见 plans/rimewubi.md |
+| P1-1 | 建仓 + init `config/` 结构 + `install.sh` | ✅ 完成 | |
+| P1-2 | 整理核心配置文件进 `config/` | ✅ 完成 | 共11个 yaml |
+| P1-3 | 整理 Lua 脚本进 `config/lua/` | ✅ 完成 | 共5个 lua |
+| P1-4 | GitHub Actions CI + README 初稿 | ✅ 完成 | https://github.com/Thinkre/RimeWubi |
+| P1-5 | Phase 1 验收 | ✅ 完成 | install.sh 本地验收通过 |
 
 ---
 
