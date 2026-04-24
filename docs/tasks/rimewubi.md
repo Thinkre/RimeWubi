@@ -1,0 +1,43 @@
+# RimeWubi 任务清单
+
+**计划文档：** `docs/plans/rimewubi.md`
+**设计文档：** `docs/superpowers/specs/2026-04-25-rimewubi-design.md`
+**最后更新：** 2026-04-25
+
+---
+
+## Phase 1：Rime 配置层
+
+| ID | 任务 | 状态 | 备注 |
+|----|------|------|------|
+| P1-1 | 建仓 + init `config/` 结构 + `install.sh` | ⬜ 待做 | |
+| P1-2 | 整理核心配置文件进 `config/` | ⬜ 待做 | 共10个 yaml |
+| P1-3 | 整理 Lua 脚本进 `config/lua/` | ⬜ 待做 | 共5个 lua |
+| P1-4 | GitHub Actions CI + README 初稿 | ⬜ 待做 | |
+| P1-5 | Phase 1 验收 | ⬜ 待做 | 见 plans/rimewubi.md |
+
+---
+
+## Phase 2：Electron App
+
+| ID | 任务 | 状态 | 备注 |
+|----|------|------|------|
+| P2-1 | Electron 骨架（main.js + index.html + renderer.js）| ⬜ 待做 | |
+| P2-2a | Deploy 模块（最小 MVP）| ⬜ 待做 | 先跑通部署流程 |
+| P2-2b | Appearance 模块 | ⬜ 待做 | |
+| P2-2c | Keybindings 模块 | ⬜ 待做 | |
+| P2-2d | LuaFeatures 模块 | ⬜ 待做 | |
+| P2-2e | AppOptions 模块 | ⬜ 待做 | |
+| P2-2f | Vocabulary 模块 | ⬜ 待做 | |
+| P2-3 | 首次启动流程（Squirrel 检测 + 引导）| ⬜ 待做 | |
+| P2-4 | GitHub Actions 打包 + electron-updater | ⬜ 待做 | |
+| P2-5 | Phase 2 验收 | ⬜ 待做 | 见 plans/rimewubi.md |
+
+---
+
+## 状态说明
+
+- ⬜ 待做
+- 🔄 进行中
+- ✅ 完成
+- ❌ 阻塞（需解决后继续）
