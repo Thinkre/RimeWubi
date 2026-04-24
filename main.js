@@ -93,6 +93,46 @@ ipcMain.handle('rime:open-squirrel-download', () => {
   shell.openExternal('https://rime.im')
 })
 
+// ── 应用选项 IPC ─────────────────────────────────────────────
+
+ipcMain.handle('app-options:read', () => {
+  const p = path.join(RIME_DIR, 'squirrel.custom.yaml')
+  if (!fs.existsSync(p)) return {}
+  const doc = yaml.load(fs.readFileSync(p, 'utf-8'))
+  return doc?.patch?.app_options || {}
+})
+
+ipcMain.handle('app-options:write', (_, apps) => {
+  const p = path.join(RIME_DIR, 'squirrel.custom.yaml')
+  let content = fs.readFileSync(p, 'utf-8')
+
+  const lines = content.split('\n')
+  let start = -1, end = lines.length
+
+  for (let i = 0; i < lines.length; i++) {
+    if (/^ {2}app_options:/.test(lines[i])) {
+      start = i
+      for (let j = i + 1; j < lines.length; j++) {
+        if (lines[j].trim() && /^ {0,2}\S/.test(lines[j])) { end = j; break }
+      }
+      break
+    }
+  }
+
+  const block = ['  app_options:']
+  for (const [id, opts] of Object.entries(apps)) {
+    block.push(`    ${id}:`)
+    for (const [k, v] of Object.entries(opts)) block.push(`      ${k}: ${v}`)
+  }
+
+  const result = start === -1
+    ? content
+    : [...lines.slice(0, start), ...block, ...lines.slice(end)].join('\n')
+
+  fs.writeFileSync(p, result, 'utf-8')
+  return true
+})
+
 // ── Lua 功能 IPC ─────────────────────────────────────────────
 
 const LUA_FEATURES = [

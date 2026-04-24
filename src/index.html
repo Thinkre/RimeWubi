@@ -154,10 +154,33 @@
     <section id="module-app-options" class="module">
       <div class="module-header">
         <div class="module-title">应用选项</div>
-        <div class="module-desc">管理自动切换英文的应用列表</div>
+        <div class="module-desc">进入以下应用时自动切换为英文输入模式，修改后需点击「部署生效」</div>
       </div>
       <div class="module-body">
-        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2e</p>
+
+        <!-- 当前列表 -->
+        <div class="ao-section-label">已添加的应用</div>
+        <div id="ao-list"></div>
+
+        <!-- 快速添加常用应用 -->
+        <div class="ao-section-label" style="margin-top:20px">快速添加</div>
+        <div class="ao-presets" id="ao-presets"></div>
+
+        <!-- 手动输入 Bundle ID -->
+        <div class="ao-section-label" style="margin-top:16px">手动输入 Bundle ID</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="ao-input" class="ao-input" type="text" placeholder="com.example.App">
+          <button class="btn btn-secondary" id="ao-add-btn">添加</button>
+        </div>
+        <div class="form-hint" style="margin-top:6px">
+          在终端运行 <code>osascript -e 'id of app "应用名"'</code> 可查询 Bundle ID
+        </div>
+
+        <div style="margin-top:24px;display:flex;align-items:center;gap:12px">
+          <button class="btn btn-primary" id="ao-save-btn">保存应用列表</button>
+          <span id="ao-save-status" style="font-size:12px;color:var(--color-text-secondary)"></span>
+        </div>
+
       </div>
     </section>
 
@@ -178,5 +201,6 @@
 <script src="appearance.js"></script>
 <script src="keybindings.js"></script>
 <script src="lua-features.js"></script>
+<script src="app-options.js"></script>
 </body>
 </html>

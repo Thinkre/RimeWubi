@@ -359,6 +359,97 @@ nav ul li a.active {
   letter-spacing: 0.02em;
 }
 
+/* ── AppOptions module ─────────────────── */
+.ao-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.ao-empty {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  padding: 12px 0;
+}
+
+.ao-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: 7px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  margin-bottom: 6px;
+}
+
+.ao-item-id {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--color-text);
+}
+
+.ao-remove-btn {
+  font-size: 11px;
+  padding: 3px 10px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-danger);
+}
+
+.ao-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ao-chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 12px;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms;
+}
+
+.ao-chip:hover { background: var(--color-border); }
+
+.ao-chip-added {
+  background: var(--color-nav-active-bg);
+  border-color: transparent;
+  color: var(--color-nav-active-text);
+  font-weight: 500;
+}
+
+.ao-input {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 7px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 13px;
+  font-family: monospace;
+  outline: none;
+}
+
+.ao-input:focus { border-color: var(--color-accent); }
+
+code {
+  font-family: monospace;
+  font-size: 11px;
+  background: var(--color-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
 /* ── Status tag ────────────────────────── */
 .status {
   font-size: 12px;

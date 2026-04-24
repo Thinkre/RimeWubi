@@ -12,4 +12,6 @@ contextBridge.exposeInMainWorld('rime', {
   writeKeybindings:     (bindings)            => ipcRenderer.invoke('keybindings:write', bindings),
   readLuaFeatures:      ()                    => ipcRenderer.invoke('lua:read-features'),
   setLuaFeature:        (id, enabled)         => ipcRenderer.invoke('lua:set-feature', id, enabled),
+  readAppOptions:       ()                    => ipcRenderer.invoke('app-options:read'),
+  writeAppOptions:      (apps)                => ipcRenderer.invoke('app-options:write', apps),
 })
