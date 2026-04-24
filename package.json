@@ -4,7 +4,7 @@
   "description": "Rime 五笔配置发行版 - macOS 配置 App",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "node_modules/.bin/electron .",
     "build": "electron-builder --mac dmg"
   },
   "build": {

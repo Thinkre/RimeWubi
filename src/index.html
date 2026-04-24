@@ -56,7 +56,21 @@
         <div class="module-desc">修改配置后点击「重新部署」让输入法立即生效</div>
       </div>
       <div class="module-body" id="deploy-body">
-        <!-- P2-2a 实现 -->
+
+        <div class="deploy-card">
+          <div class="deploy-card-label">Squirrel 状态</div>
+          <div id="squirrel-status" class="status status-loading">检测中…</div>
+        </div>
+
+        <div class="deploy-action">
+          <button id="deploy-btn" class="btn btn-primary btn-deploy" disabled>
+            <span id="deploy-btn-icon">⚡</span>
+            <span id="deploy-btn-text">重新部署</span>
+          </button>
+          <div id="deploy-result" class="deploy-result"></div>
+          <div id="deploy-last" class="deploy-last"></div>
+        </div>
+
       </div>
     </section>
 
