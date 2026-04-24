@@ -140,10 +140,14 @@
     <section id="module-lua-features" class="module">
       <div class="module-header">
         <div class="module-title">Lua 功能</div>
-        <div class="module-desc">开启/关闭拼音注释、造词等 Lua 增强功能</div>
+        <div class="module-desc">开关各项 Lua 增强功能，修改后需点击「部署生效」</div>
       </div>
       <div class="module-body">
-        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2d</p>
+        <div id="lua-groups"></div>
+        <div style="margin-top:24px;display:flex;align-items:center;gap:12px">
+          <button class="btn btn-primary" id="lua-save-btn">保存 Lua 设置</button>
+          <span id="lua-save-status" style="font-size:12px;color:var(--color-text-secondary)"></span>
+        </div>
       </div>
     </section>
 
@@ -173,5 +177,6 @@
 <script src="renderer.js"></script>
 <script src="appearance.js"></script>
 <script src="keybindings.js"></script>
+<script src="lua-features.js"></script>
 </body>
 </html>

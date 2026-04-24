@@ -93,6 +93,45 @@ ipcMain.handle('rime:open-squirrel-download', () => {
   shell.openExternal('https://rime.im')
 })
 
+// ── Lua 功能 IPC ─────────────────────────────────────────────
+
+const LUA_FEATURES = [
+  { id: 'save_word',       file: 'wubi86_jidian_pinyin.schema.yaml', pattern: 'lua_processor@*wubi_save_word' },
+  { id: 'code_hint',       file: 'wubi86_jidian_pinyin.schema.yaml', pattern: 'lua_filter@*wubi86_jidian_pinyin_code_hint' },
+  { id: 'date_translator', file: 'wubi86_jidian.schema.yaml',        pattern: 'lua_translator@*wubi86_jidian_date_translator' },
+  { id: 'single_char_first', file: 'wubi86_jidian.schema.yaml',      pattern: 'lua_filter@*wubi86_jidian_single_char_first_filter' },
+  { id: 'single_char_only',  file: 'wubi86_jidian.schema.yaml',      pattern: 'lua_filter@*wubi86_jidian_single_char_only' },
+]
+
+function escRx(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') }
+
+ipcMain.handle('lua:read-features', () => {
+  const result = {}
+  for (const f of LUA_FEATURES) {
+    const p = path.join(RIME_DIR, f.file)
+    if (!fs.existsSync(p)) { result[f.id] = false; continue }
+    const content = fs.readFileSync(p, 'utf-8')
+    result[f.id] = new RegExp(`^\\s+- ${escRx(f.pattern)}`, 'm').test(content)
+  }
+  return result
+})
+
+ipcMain.handle('lua:set-feature', (_, id, enabled) => {
+  const feature = LUA_FEATURES.find(f => f.id === id)
+  const p = path.join(RIME_DIR, feature.file)
+  let content = fs.readFileSync(p, 'utf-8')
+  const pat = escRx(feature.pattern)
+
+  if (enabled) {
+    content = content.replace(new RegExp(`^#(\\s+- ${pat}.*)`, 'm'), '$1')
+  } else {
+    content = content.replace(new RegExp(`^(\\s+- ${pat}.*)`, 'm'), '#$1')
+  }
+
+  fs.writeFileSync(p, content, 'utf-8')
+  return true
+})
+
 // ── 按键绑定 IPC ─────────────────────────────────────────────
 
 ipcMain.handle('keybindings:read', () => {

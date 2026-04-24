@@ -10,4 +10,6 @@ contextBridge.exposeInMainWorld('rime', {
   updateScheme:         (name, fields)        => ipcRenderer.invoke('squirrel:update-scheme', name, fields),
   readKeybindings:      ()                    => ipcRenderer.invoke('keybindings:read'),
   writeKeybindings:     (bindings)            => ipcRenderer.invoke('keybindings:write', bindings),
+  readLuaFeatures:      ()                    => ipcRenderer.invoke('lua:read-features'),
+  setLuaFeature:        (id, enabled)         => ipcRenderer.invoke('lua:set-feature', id, enabled),
 })
