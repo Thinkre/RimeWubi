@@ -126,10 +126,14 @@
     <section id="module-keybindings" class="module">
       <div class="module-header">
         <div class="module-title">按键设置</div>
-        <div class="module-desc">配置分号/引号选词、翻页键、Emacs 模式等</div>
+        <div class="module-desc">启用/关闭快捷键组，修改后需点击「部署生效」</div>
       </div>
       <div class="module-body">
-        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2c</p>
+        <div id="kb-groups"></div>
+        <div style="margin-top:24px;display:flex;align-items:center;gap:12px">
+          <button class="btn btn-primary" id="kb-save-btn">保存按键设置</button>
+          <span id="kb-save-status" style="font-size:12px;color:var(--color-text-secondary)"></span>
+        </div>
       </div>
     </section>
 
@@ -168,5 +172,6 @@
 
 <script src="renderer.js"></script>
 <script src="appearance.js"></script>
+<script src="keybindings.js"></script>
 </body>
 </html>

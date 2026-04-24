@@ -8,4 +8,6 @@ contextBridge.exposeInMainWorld('rime', {
   openSquirrelDownload: ()                    => ipcRenderer.invoke('rime:open-squirrel-download'),
   readSquirrelStyle:    ()                    => ipcRenderer.invoke('squirrel:read-style'),
   updateScheme:         (name, fields)        => ipcRenderer.invoke('squirrel:update-scheme', name, fields),
+  readKeybindings:      ()                    => ipcRenderer.invoke('keybindings:read'),
+  writeKeybindings:     (bindings)            => ipcRenderer.invoke('keybindings:write', bindings),
 })

@@ -93,6 +93,25 @@ ipcMain.handle('rime:open-squirrel-download', () => {
   shell.openExternal('https://rime.im')
 })
 
+// ── 按键绑定 IPC ─────────────────────────────────────────────
+
+ipcMain.handle('keybindings:read', () => {
+  const p = path.join(RIME_DIR, 'default.custom.yaml')
+  if (!fs.existsSync(p)) return []
+  const doc = yaml.load(fs.readFileSync(p, 'utf-8'))
+  return doc?.patch?.key_binder?.bindings || []
+})
+
+ipcMain.handle('keybindings:write', (_, bindings) => {
+  const p = path.join(RIME_DIR, 'default.custom.yaml')
+  const doc = yaml.load(fs.readFileSync(p, 'utf-8'))
+  if (!doc.patch) doc.patch = {}
+  if (!doc.patch.key_binder) doc.patch.key_binder = {}
+  doc.patch.key_binder.bindings = bindings
+  fs.writeFileSync(p, yaml.dump(doc, { lineWidth: -1 }), 'utf-8')
+  return true
+})
+
 // ── Squirrel 外观 IPC ────────────────────────────────────────
 
 // 读取 squirrel.custom.yaml 中的 patch 对象

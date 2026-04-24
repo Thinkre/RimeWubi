@@ -315,6 +315,50 @@ nav ul li a.active {
   background: none;
 }
 
+/* ── Toggle switch ─────────────────────── */
+.kb-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.kb-toggle input { opacity: 0; width: 0; height: 0; }
+
+.kb-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: 13px;
+  transition: background 200ms;
+  cursor: pointer;
+}
+
+.kb-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 200ms;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+
+.kb-toggle input:checked + .kb-slider { background: var(--color-accent); }
+.kb-toggle input:checked + .kb-slider::before { transform: translateX(18px); }
+
+.kb-keys {
+  margin-top: 3px;
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
 /* ── Status tag ────────────────────────── */
 .status {
   font-size: 12px;
