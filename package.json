@@ -12,12 +12,19 @@
     "productName": "RimeWubi",
     "mac": {
       "category": "public.app-category.utilities",
+      "identity": "Developer ID Application: Wenjing Zhu (BL67GP4S58)",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "entitlements.plist",
       "entitlementsInherit": "entitlements.plist",
       "target": [
-        { "target": "dmg", "arch": ["arm64", "x64"] }
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
       ]
     },
     "afterSign": "scripts/notarize.js",
@@ -45,6 +52,6 @@
     "@electron/notarize": "^3.1.1",
     "dotenv": "^17.4.2",
     "electron": "^33.4.11",
-    "electron-builder": "^25.1.8"
+    "electron-builder": "^24.9.4"
   }
 }
