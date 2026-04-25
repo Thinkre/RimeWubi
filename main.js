@@ -51,7 +51,7 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 
-// 将 config/ 写入 ~/Library/Rime/，不覆盖用户词库
+// 将 config/ 写入 ~/Library/Rime/；已存在的文件跳过，保留用户修改
 function installConfig() {
   fs.mkdirSync(RIME_DIR, { recursive: true })
   for (const file of fs.readdirSync(CONFIG_DIR)) {
@@ -60,10 +60,11 @@ function installConfig() {
     if (fs.statSync(src).isDirectory()) {
       fs.mkdirSync(dest, { recursive: true })
       for (const sub of fs.readdirSync(src)) {
-        fs.copyFileSync(path.join(src, sub), path.join(dest, sub))
+        const destSub = path.join(dest, sub)
+        if (!fs.existsSync(destSub)) fs.copyFileSync(path.join(src, sub), destSub)
       }
     } else {
-      fs.copyFileSync(src, dest)
+      if (!fs.existsSync(dest)) fs.copyFileSync(src, dest)
     }
   }
 }

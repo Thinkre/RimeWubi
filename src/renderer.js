@@ -45,18 +45,34 @@ deployBtn.addEventListener('click', async () => {
 })
 
 // 启动时检测 Squirrel
-;(async () => {
+async function runSquirrelCheck() {
   const installed = await window.rime.checkSquirrel()
+  const gate = document.getElementById('squirrel-gate')
   if (!installed) {
-    document.getElementById('squirrel-gate').classList.add('visible')
+    gate.classList.add('visible')
     squirrelStatus.textContent = '未安装'
     squirrelStatus.className = 'status status-err'
+    deployBtn.disabled = true
   } else {
+    gate.classList.remove('visible')
     squirrelStatus.textContent = '已安装'
     squirrelStatus.className = 'status status-ok'
     deployBtn.disabled = false
   }
+  return installed
+}
 
+document.getElementById('recheck-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('recheck-btn')
+  btn.disabled = true
+  btn.textContent = '检测中…'
+  await runSquirrelCheck()
+  btn.disabled = false
+  btn.textContent = '已安装，重新检测'
+})
+
+;(async () => {
+  await runSquirrelCheck()
   const last = localStorage.getItem('lastDeploy')
   if (last) deployLast.textContent = `上次部署：${last}`
 })()

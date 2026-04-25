@@ -14,9 +14,14 @@
   <div style="font-size:48px">⌨️</div>
   <h2>需要先安装 Squirrel 鼠须管</h2>
   <p>RimeWubi 依赖 Squirrel 输入法运行。请先下载安装，完成后重新打开此应用。</p>
-  <button class="btn btn-primary" onclick="window.rime.openSquirrelDownload()">
-    前往下载 Squirrel
-  </button>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-primary" onclick="window.rime.openSquirrelDownload()">
+      前往下载 Squirrel
+    </button>
+    <button class="btn btn-secondary" id="recheck-btn">
+      已安装，重新检测
+    </button>
+  </div>
 </div>
 
 <div id="app">
