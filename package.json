@@ -12,11 +12,15 @@
     "productName": "RimeWubi",
     "mac": {
       "category": "public.app-category.utilities",
-      "identity": null,
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.plist",
+      "entitlementsInherit": "entitlements.plist",
       "target": [
         { "target": "dmg", "arch": ["arm64", "x64"] }
       ]
     },
+    "afterSign": "scripts/notarize.js",
     "dmg": {
       "title": "RimeWubi ${version}"
     },
@@ -38,6 +42,8 @@
     "js-yaml": "^4.1.1"
   },
   "devDependencies": {
+    "@electron/notarize": "^3.1.1",
+    "dotenv": "^17.4.2",
     "electron": "^33.4.11",
     "electron-builder": "^25.1.8"
   }
