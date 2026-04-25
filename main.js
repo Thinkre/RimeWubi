@@ -121,9 +121,18 @@ ipcMain.handle('vocab:read-user', () => {
   return fs.existsSync(p) ? parseDictEntries(fs.readFileSync(p, 'utf-8')) : []
 })
 
+const USER_DICT_HEADER = `# Rime dictionary
+# encoding: utf-8
+---
+name: wubi86_jidian_user
+version: "1"
+sort: by_weight
+...
+`
+
 ipcMain.handle('vocab:write-user', (_, entries) => {
   const p = path.join(RIME_DIR, 'wubi86_jidian_user.dict.yaml')
-  const content = fs.readFileSync(p, 'utf-8')
+  const content = fs.existsSync(p) ? fs.readFileSync(p, 'utf-8') : USER_DICT_HEADER
   fs.writeFileSync(p, serializeDictEntries(content, entries), 'utf-8')
   return true
 })
