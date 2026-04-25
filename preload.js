@@ -14,4 +14,7 @@ contextBridge.exposeInMainWorld('rime', {
   setLuaFeature:        (id, enabled)         => ipcRenderer.invoke('lua:set-feature', id, enabled),
   readAppOptions:       ()                    => ipcRenderer.invoke('app-options:read'),
   writeAppOptions:      (apps)                => ipcRenderer.invoke('app-options:write', apps),
+  readUserVocab:        ()                    => ipcRenderer.invoke('vocab:read-user'),
+  writeUserVocab:       (entries)             => ipcRenderer.invoke('vocab:write-user', entries),
+  searchExtra:          (query)               => ipcRenderer.invoke('vocab:search-extra', query),
 })

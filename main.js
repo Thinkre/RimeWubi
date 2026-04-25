@@ -93,6 +93,49 @@ ipcMain.handle('rime:open-squirrel-download', () => {
   shell.openExternal('https://rime.im')
 })
 
+// ── 词库 IPC ──────────────────────────────────────────────────
+
+function parseDictEntries(content) {
+  const idx = content.indexOf('\n...\n')
+  if (idx === -1) return []
+  const entries = []
+  for (const line of content.slice(idx + 5).split('\n')) {
+    if (!line.trim() || line.startsWith('#')) continue
+    const parts = line.split('\t')
+    if (parts.length >= 2) entries.push({ word: parts[0], code: parts[1], weight: parts[2] || '' })
+  }
+  return entries
+}
+
+function serializeDictEntries(content, entries) {
+  const idx = content.indexOf('\n...\n')
+  if (idx === -1) return content
+  const header = content.slice(0, idx + 5)
+  const body = entries.map(e => e.weight ? `${e.word}\t${e.code}\t${e.weight}` : `${e.word}\t${e.code}`).join('\n')
+  return header + (body ? body + '\n' : '')
+}
+
+ipcMain.handle('vocab:read-user', () => {
+  const p = path.join(RIME_DIR, 'wubi86_jidian_user.dict.yaml')
+  return fs.existsSync(p) ? parseDictEntries(fs.readFileSync(p, 'utf-8')) : []
+})
+
+ipcMain.handle('vocab:write-user', (_, entries) => {
+  const p = path.join(RIME_DIR, 'wubi86_jidian_user.dict.yaml')
+  const content = fs.readFileSync(p, 'utf-8')
+  fs.writeFileSync(p, serializeDictEntries(content, entries), 'utf-8')
+  return true
+})
+
+ipcMain.handle('vocab:search-extra', (_, query) => {
+  const p = path.join(RIME_DIR, 'wubi86_jidian_extra.dict.yaml')
+  if (!fs.existsSync(p)) return []
+  const all = parseDictEntries(fs.readFileSync(p, 'utf-8'))
+  if (!query) return all.slice(0, 60)
+  const q = query.toLowerCase()
+  return all.filter(e => e.word.includes(query) || e.code.toLowerCase().startsWith(q)).slice(0, 100)
+})
+
 // ── 应用选项 IPC ─────────────────────────────────────────────
 
 ipcMain.handle('app-options:read', () => {

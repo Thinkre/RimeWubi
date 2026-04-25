@@ -461,3 +461,49 @@ code {
 .status-ok      { background: rgba(52,199,89,.15); color: var(--color-success); }
 .status-err     { background: rgba(255,59,48,.15); color: var(--color-danger); }
 .status-loading { background: var(--color-border); color: var(--color-text-secondary); }
+
+/* ── Vocabulary module ─────────────────── */
+.voc-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.voc-table-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.voc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.voc-table thead th {
+  background: var(--color-bg);
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.voc-table tbody tr:not(:last-child) td {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.voc-table tbody tr:hover td { background: var(--color-bg); }
+
+.voc-table td { padding: 8px 12px; }
+
+.voc-word   { font-size: 14px; }
+.voc-code   { font-family: monospace; color: var(--color-text-secondary); }
+.voc-weight { font-family: monospace; font-size: 12px; color: var(--color-text-secondary); }

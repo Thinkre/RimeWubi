@@ -187,10 +187,42 @@
     <section id="module-vocabulary" class="module">
       <div class="module-header">
         <div class="module-title">词库管理</div>
-        <div class="module-desc">查看/添加用户词条，管理 extra 词库</div>
+        <div class="module-desc">管理用户自定义词条，搜索扩展词库</div>
       </div>
       <div class="module-body">
-        <p style="color:var(--color-text-secondary)">即将推出 —— P2-2f</p>
+
+        <div class="ap-tabs">
+          <button class="ap-tab active" data-voc-tab="user">📝 用户词条</button>
+          <button class="ap-tab" data-voc-tab="extra">📦 扩展词库</button>
+        </div>
+
+        <!-- 用户词条面板 -->
+        <div id="voc-user-panel">
+          <div class="voc-add-row">
+            <input id="voc-word"   class="ao-input" type="text" placeholder="词条（如：五笔）" style="max-width:160px">
+            <input id="voc-code"   class="ao-input" type="text" placeholder="编码（如：gxxn）" style="max-width:120px;font-family:monospace">
+            <input id="voc-weight" class="ao-input" type="text" placeholder="权重（可选）" style="max-width:90px">
+            <button class="btn btn-primary" id="voc-add-btn">添加</button>
+          </div>
+          <div class="form-hint" style="margin-bottom:12px">五笔编码 1–4 个小写字母，权重留空表示不指定</div>
+
+          <div id="voc-user-list" class="voc-table-wrap"></div>
+
+          <div style="margin-top:16px;display:flex;align-items:center;gap:12px">
+            <button class="btn btn-primary" id="voc-save-btn">保存词条</button>
+            <span id="voc-save-status" style="font-size:12px;color:var(--color-text-secondary)"></span>
+          </div>
+        </div>
+
+        <!-- 扩展词库面板 -->
+        <div id="voc-extra-panel" style="display:none">
+          <div style="display:flex;gap:8px;margin-bottom:12px">
+            <input id="voc-search" class="ao-input" type="text" placeholder="搜索词条或编码…">
+          </div>
+          <div id="voc-extra-list" class="voc-table-wrap"></div>
+          <div id="voc-extra-count" class="form-hint" style="margin-top:8px"></div>
+        </div>
+
       </div>
     </section>
 
@@ -202,5 +234,6 @@
 <script src="keybindings.js"></script>
 <script src="lua-features.js"></script>
 <script src="app-options.js"></script>
+<script src="vocabulary.js"></script>
 </body>
 </html>
