@@ -22,16 +22,16 @@
 
 | ID | 任务 | 状态 | 备注 |
 |----|------|------|------|
-| P2-1 | Electron 骨架（main.js + index.html + renderer.js）| ⬜ 待做 | |
-| P2-2a | Deploy 模块（最小 MVP）| ⬜ 待做 | 先跑通部署流程 |
-| P2-2b | Appearance 模块 | ⬜ 待做 | |
-| P2-2c | Keybindings 模块 | ⬜ 待做 | |
-| P2-2d | LuaFeatures 模块 | ⬜ 待做 | |
-| P2-2e | AppOptions 模块 | ⬜ 待做 | |
-| P2-2f | Vocabulary 模块 | ⬜ 待做 | |
-| P2-3 | 首次启动流程（Squirrel 检测 + 引导）| ⬜ 待做 | |
-| P2-4 | GitHub Actions 打包 + electron-updater | ⬜ 待做 | |
-| P2-5 | Phase 2 验收 | ⬜ 待做 | 见 plans/rimewubi.md |
+| P2-1 | Electron 骨架（main.js + index.html + renderer.js）| ✅ 完成 | |
+| P2-2a | Deploy 模块（最小 MVP）| ✅ 完成 | |
+| P2-2b | Appearance 模块 | ✅ 完成 | BGR↔hex + 实时预览 |
+| P2-2c | Keybindings 模块 | ✅ 完成 | |
+| P2-2d | LuaFeatures 模块 | ✅ 完成 | 互斥逻辑 |
+| P2-2e | AppOptions 模块 | ✅ 完成 | |
+| P2-2f | Vocabulary 模块 | ✅ 完成 | 用户词条增删 + 扩展词库搜索 |
+| P2-3 | 首次启动流程（Squirrel 检测 + 引导）| ✅ 完成 | installConfig skip-if-exists + 重新检测按钮 |
+| P2-4 | GitHub Actions 打包 + electron-updater | ✅ 完成 | arm64 dmg 已发布至 v0.1.0 |
+| P2-5 | Phase 2 验收 | ✅ 完成 | 三层连通全绿，CI 绿 |
 
 ---
 
