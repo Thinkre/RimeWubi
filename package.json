@@ -12,14 +12,9 @@
     "productName": "RimeWubi",
     "mac": {
       "category": "public.app-category.utilities",
+      "identity": null,
       "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "arm64",
-            "x64"
-          ]
-        }
+        { "target": "dmg", "arch": ["arm64", "x64"] }
       ]
     },
     "dmg": {
@@ -29,7 +24,8 @@
       "main.js",
       "preload.js",
       "src/**/*",
-      "config/**/*"
+      "config/**/*",
+      "node_modules/**"
     ],
     "publish": {
       "provider": "github",
@@ -38,7 +34,8 @@
     }
   },
   "dependencies": {
-    "electron-updater": "^6.3.9"
+    "electron-updater": "^6.3.9",
+    "js-yaml": "^4.1.1"
   },
   "devDependencies": {
     "electron": "^33.4.11",
