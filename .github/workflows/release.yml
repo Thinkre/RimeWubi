@@ -26,8 +26,26 @@ jobs:
         env:
           ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
-      - name: Build dmg (arm64 + x64)
+      # 将 Base64 证书写为临时文件，供 electron-builder 读取
+      - name: Decode signing certificate
+        run: |
+          echo "$CSC_LINK_BASE64" | base64 --decode > /tmp/cert.p12
+          echo "CSC_LINK=/tmp/cert.p12" >> $GITHUB_ENV
+        env:
+          CSC_LINK_BASE64: ${{ secrets.CSC_LINK }}
+
+      - name: Build & publish dmg (arm64 + x64)
         run: npm run build -- --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+          CSC_LINK: ${{ env.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          CSC_NAME: ${{ secrets.CSC_NAME }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
+      - name: Clean up certificate
+        if: always()
+        run: rm -f /tmp/cert.p12

@@ -72,6 +72,79 @@ bash install.sh
 
 ---
 
+## 开发
+
+### 环境准备
+
+```bash
+git clone https://github.com/Thinkre/RimeWubi.git
+cd RimeWubi
+npm install
+```
+
+复制并填写签名凭证（本地构建需要）：
+
+```bash
+cp .env.example .env
+# 编辑 .env，填入 APPLE_ID、APPLE_TEAM_ID 等
+```
+
+### 本地运行
+
+```bash
+npm start
+```
+
+### 验证配置文件
+
+CI 会在每次 push 时自动校验，本地也可手动跑：
+
+```bash
+# 检查必需文件是否存在
+bash -c '
+  for f in \
+    config/squirrel.custom.yaml config/default.custom.yaml \
+    config/wubi86_jidian.schema.yaml config/wubi86_jidian.dict.yaml \
+    config/wubi86_jidian_extra.dict.yaml \
+    config/wubi86_jidian_pinyin.schema.yaml \
+    config/lua/wubi_save_word.lua \
+    config/lua/wubi86_jidian_pinyin_code_hint.lua; do
+    [ -f "$f" ] || echo "缺失: $f"
+  done && echo "文件检查通过"
+'
+
+# 验证 YAML 语法（跳过 .dict.yaml）
+python3 -c "
+import yaml, glob, sys
+errors = []
+for p in glob.glob('config/**/*.yaml', recursive=True):
+    if p.endswith('.dict.yaml'): continue
+    try:
+        yaml.safe_load(open(p))
+        print('OK ', p)
+    except yaml.YAMLError as e:
+        errors.append(p); print('NG ', p, e)
+sys.exit(1 if errors else 0)
+"
+```
+
+### 本地编译 dmg
+
+```bash
+npm run build
+# 产物在 dist/RimeWubi-<version>-arm64.dmg 和 dist/RimeWubi-<version>-x64.dmg
+```
+
+### 发布新版本
+
+```bash
+bash scripts/release.sh
+```
+
+交互式选择 patch / minor / major，脚本自动完成：更新 `package.json` 版本号 → `git commit` → 创建 tag → push → 触发 GitHub Actions 构建并发布到 Releases。
+
+---
+
 ## 目录结构
 
 ```

@@ -10,6 +10,7 @@
   "build": {
     "appId": "com.thinkre.rimewubi",
     "productName": "RimeWubi",
+    "icon": "build/icon.icns",
     "mac": {
       "category": "public.app-category.utilities",
       "hardenedRuntime": true,

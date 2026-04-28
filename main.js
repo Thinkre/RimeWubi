@@ -32,6 +32,9 @@ function createWindow() {
 }
 
 app.whenReady().then(async () => {
+  if (app.dock) {
+    app.dock.setIcon(path.join(__dirname, 'build/icon.iconset/icon_512x512@2x.png'))
+  }
   createWindow()
 
   // 首次启动：检测 Squirrel → 若已安装则自动写入配置
