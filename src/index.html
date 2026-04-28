@@ -13,15 +13,19 @@
 <div id="squirrel-gate">
   <div style="font-size:48px">⌨️</div>
   <h2>需要先安装 Squirrel 鼠须管</h2>
-  <p>RimeWubi 依赖 Squirrel 输入法运行。请先下载安装，完成后重新打开此应用。</p>
+  <p>RimeWubi 依赖 Squirrel 输入法运行。请先安装，完成后点击"重新检测"。</p>
   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-    <button class="btn btn-primary" onclick="window.rime.openSquirrelDownload()">
+    <button class="btn btn-primary" id="auto-install-btn">
+      自动安装（Homebrew）
+    </button>
+    <button class="btn btn-secondary" id="download-btn">
       前往下载 Squirrel
     </button>
     <button class="btn btn-secondary" id="recheck-btn">
       已安装，重新检测
     </button>
   </div>
+  <p id="install-status" style="margin-top:12px;font-size:13px;min-height:20px"></p>
 </div>
 
 <div id="app">

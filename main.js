@@ -70,6 +70,16 @@ function installConfig() {
       if (!fs.existsSync(dest)) fs.copyFileSync(src, dest)
     }
   }
+
+  // 确保用户词典文件存在，否则 rime_deployer 编译五笔词典时会报错
+  const USER_DICT_HEADER = `# Rime dictionary\n# encoding: utf-8\n---\nname: wubi86_jidian_user\nversion: "1"\nsort: by_weight\n...\n`
+  const userDict = path.join(RIME_DIR, 'wubi86_jidian_user.dict.yaml')
+  if (!fs.existsSync(userDict)) fs.writeFileSync(userDict, USER_DICT_HEADER, 'utf-8')
+
+  const hamsterDict = path.join(RIME_DIR, 'wubi86_jidian_user_hamster.dict.yaml')
+  if (!fs.existsSync(hamsterDict)) {
+    fs.writeFileSync(hamsterDict, USER_DICT_HEADER.replace('wubi86_jidian_user', 'wubi86_jidian_user_hamster'), 'utf-8')
+  }
 }
 
 // ── IPC handlers ────────────────────────────────────────────
@@ -96,6 +106,29 @@ ipcMain.handle('rime:write-file', (_, filename, content) => {
 ipcMain.handle('rime:open-squirrel-download', () => {
   shell.openExternal('https://rime.im')
 })
+
+ipcMain.handle('rime:install-squirrel', () => new Promise((resolve, reject) => {
+  const brew = fs.existsSync('/opt/homebrew/bin/brew')
+    ? '/opt/homebrew/bin/brew'
+    : '/usr/local/bin/brew'
+
+  if (!fs.existsSync(brew)) {
+    reject('未检测到 Homebrew，请先安装 Homebrew 或手动下载鼠须管。')
+    return
+  }
+
+  // 先下载 pkg（不需要 sudo），再用系统安装器打开（原生权限弹窗）
+  execFile(brew, ['fetch', '--cask', 'squirrel-app'], { timeout: 120000 }, (err, _stdout, stderr) => {
+    if (err) { reject(stderr || err.message); return }
+
+    execFile(brew, ['--cache', '--cask', 'squirrel-app'], (err2, out) => {
+      if (err2) { reject(err2.message); return }
+      const pkgPath = out.trim()
+      shell.openPath(pkgPath)
+      resolve('open')
+    })
+  })
+}))
 
 // ── 词库 IPC ──────────────────────────────────────────────────
 

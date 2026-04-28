@@ -10,36 +10,38 @@ permissions:
 
 jobs:
   release:
-    name: Build & Publish dmg
+    name: Build & Publish
     runs-on: macos-latest
 
-    steps:
-      - uses: actions/checkout@v4
+    env:
+      ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
         run: npm ci
-        env:
-          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
 
-      # 将 Base64 证书写为临时文件，供 electron-builder 读取
-      - name: Decode signing certificate
+      - name: Prepare signing certificate
+        id: cert
         run: |
-          echo "$CSC_LINK_BASE64" | base64 --decode > /tmp/cert.p12
-          echo "CSC_LINK=/tmp/cert.p12" >> $GITHUB_ENV
+          echo "$CSC_LINK_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          echo "path=$RUNNER_TEMP/cert.p12" >> "$GITHUB_OUTPUT"
         env:
           CSC_LINK_BASE64: ${{ secrets.CSC_LINK }}
 
-      - name: Build & publish dmg (arm64 + x64)
+      - name: Build & publish (arm64 + x64)
         run: npm run build -- --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
-          CSC_LINK: ${{ env.CSC_LINK }}
+          CSC_LINK: ${{ steps.cert.outputs.path }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
           CSC_NAME: ${{ secrets.CSC_NAME }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -48,4 +50,4 @@ jobs:
 
       - name: Clean up certificate
         if: always()
-        run: rm -f /tmp/cert.p12
+        run: rm -f "$RUNNER_TEMP/cert.p12"

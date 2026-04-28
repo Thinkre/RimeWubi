@@ -62,6 +62,34 @@ async function runSquirrelCheck() {
   return installed
 }
 
+document.getElementById('download-btn').addEventListener('click', () => {
+  window.rime.openSquirrelDownload()
+})
+
+document.getElementById('auto-install-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('auto-install-btn')
+  const status = document.getElementById('install-status')
+  btn.disabled = true
+  btn.textContent = '下载中…'
+  status.textContent = '正在下载鼠须管安装包，请稍候…'
+  try {
+    const result = await window.rime.installSquirrel()
+    if (result === 'open') {
+      status.textContent = '安装包已打开，请在系统安装界面完成安装，完成后点击「已安装，重新检测」。'
+      btn.disabled = false
+      btn.textContent = '自动安装（Homebrew）'
+    } else {
+      status.textContent = '安装成功！正在检测…'
+      await runSquirrelCheck()
+      status.textContent = ''
+    }
+  } catch (err) {
+    status.textContent = `安装失败：${err}`
+    btn.disabled = false
+    btn.textContent = '自动安装（Homebrew）'
+  }
+})
+
 document.getElementById('recheck-btn').addEventListener('click', async () => {
   const btn = document.getElementById('recheck-btn')
   btn.disabled = true

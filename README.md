@@ -82,11 +82,10 @@ cd RimeWubi
 npm install
 ```
 
-复制并填写签名凭证（本地构建需要）：
+复制并填写签名凭证（由 `setup-env.sh` 自动生成）：
 
 ```bash
-cp .env.example .env
-# 编辑 .env，填入 APPLE_ID、APPLE_TEAM_ID 等
+./config/scripts/setup-env.sh .
 ```
 
 ### 本地运行
@@ -137,11 +136,28 @@ npm run build
 
 ### 发布新版本
 
+#### CI 自动发布（推荐）
+
 ```bash
 bash scripts/release.sh
 ```
 
-交互式选择 patch / minor / major，脚本自动完成：更新 `package.json` 版本号 → `git commit` → 创建 tag → push → 触发 GitHub Actions 构建并发布到 Releases。
+交互式选择 patch / minor / major，脚本自动完成：更新 `package.json` 版本号 → `git commit` → 创建 tag → push → 触发 GitHub Actions 构建、签名、公证、发布到 GitHub Releases。
+
+#### 本机手动发布
+
+适用于需要本地公证后分发、不经过 CI 的场景：
+
+```bash
+# 1. 本地构建（自动触发 afterSign 公证 + stapler）
+npm run build
+
+# 2. 或对已有 .app 独立签名 + 公证
+./scripts/notarize.sh ./dist/RimeWubi.app
+
+# 3. 打包 DMG 并发布到 GitHub Release
+./scripts/github-release.sh ./dist/RimeWubi.app 0.1.2 Thinkre/RimeWubi
+```
 
 ---
 

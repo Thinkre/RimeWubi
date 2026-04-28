@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('rime', {
   readFile:             (filename)            => ipcRenderer.invoke('rime:read-file', filename),
   writeFile:            (fn, content)         => ipcRenderer.invoke('rime:write-file', fn, content),
   openSquirrelDownload: ()                    => ipcRenderer.invoke('rime:open-squirrel-download'),
+  installSquirrel:      ()                    => ipcRenderer.invoke('rime:install-squirrel'),
   readSquirrelStyle:    ()                    => ipcRenderer.invoke('squirrel:read-style'),
   updateScheme:         (name, fields)        => ipcRenderer.invoke('squirrel:update-scheme', name, fields),
   readKeybindings:      ()                    => ipcRenderer.invoke('keybindings:read'),
