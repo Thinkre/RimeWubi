@@ -41,7 +41,9 @@
     "publish": {
       "provider": "github",
       "owner": "Thinkre",
-      "repo": "RimeWubi"
+      "repo": "RimeWubi",
+      "draft": false,
+      "releaseType": "release"
     }
   },
   "dependencies": {
